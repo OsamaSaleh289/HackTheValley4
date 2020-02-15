@@ -34,7 +34,7 @@ public class BubbleModel implements BubbleModelInterface, LocationListener {
       gps_enabled = false;
       network_enabled = false;
     } else {
-      locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+      //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
     }
 
   }
