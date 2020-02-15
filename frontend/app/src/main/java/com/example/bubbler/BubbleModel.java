@@ -7,7 +7,7 @@ import java.util.List;
 public class BubbleModel implements BubbleModelInterface {
 
   public void post(Time time, Location location, String content){
-
+    
   }
 
   public void update(Location location){
@@ -20,4 +20,7 @@ public class BubbleModel implements BubbleModelInterface {
     return null;
   }
 
+  public Location getLocation(){
+    return null;
+  }
 }
