@@ -34,6 +34,8 @@ public class BubbleView extends AppCompatActivity{
           }
       });
       animator.start();
+
+      first.setText(model.getLocationStr());
   }
 
 }

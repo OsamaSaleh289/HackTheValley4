@@ -8,6 +8,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import java.sql.Time;
@@ -20,30 +21,33 @@ public class BubbleModel implements BubbleModelInterface, LocationListener {
   protected LocationManager locationManager;
   protected LocationListener locationListener;
   protected boolean gps_enabled, network_enabled;
+  protected Location location;
 
   protected BubbleModel(Context context) {
     locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
-    if (context.checkSelfPermission(permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+    if (context.checkSelfPermission(permission.ACCESS_FINE_LOCATION)
+        != PackageManager.PERMISSION_GRANTED
+        && context.checkSelfPermission(permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
       // Permission is not granted
-      Toast.makeText(context, "allow location permission",Toast.LENGTH_LONG).show();
+      Toast.makeText(context, "allow location permission", Toast.LENGTH_LONG).show();
       gps_enabled = false;
-    }
-    else {
+      network_enabled = false;
+    } else {
       locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
     }
 
   }
 
-  public void post(Time time, Location location, String content){
+  public void post(Time time, Location location, String content) {
     //send time, location, content to database
   }
 
-  public void update(Location location){
+  public void update(Location location) {
     //send location to database
   }
 
-  public List receive(Location location){
+  public List receive(Location location) {
     //send location to database
 
     //receive a list of messages in radius (DUMMY)
@@ -67,27 +71,35 @@ public class BubbleModel implements BubbleModelInterface, LocationListener {
     return dummythicc;
   }
 
-  public Location getLocation(){
-    return null;
-  }
-
-  @Override
-  public void onLocationChanged(Location location){
-
-  }
-
-  @Override
-  public void onStatusChanged(String st, int in, Bundle bn){
+  public String getLocationStr(){
+    if(location != null) {
+      return "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude();
+    }
+    return "Location not yet set";
 
   }
 
-  @Override
-  public void onProviderEnabled(String st){
-
+  public Location getLocation() {
+    return location;
   }
 
   @Override
-  public void onProviderDisabled(String st){
+  public void onLocationChanged(Location location) {
+    this.location = location;
+  }
 
+  @Override
+  public void onStatusChanged(String st, int in, Bundle bn) {
+    Log.d("Latitude","status");
+  }
+
+  @Override
+  public void onProviderEnabled(String st) {
+    Log.d("Latitude","enable");
+  }
+
+  @Override
+  public void onProviderDisabled(String st) {
+    Log.d("Latitude","disable");
   }
 }
