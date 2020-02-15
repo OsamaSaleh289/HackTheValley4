@@ -9,6 +9,10 @@ public class BubbleView extends AppCompatActivity{
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.bubble);
+
+    BubbleModel model = new BubbleModel(this);
+
+
   }
 
 }
