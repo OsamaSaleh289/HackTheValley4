@@ -32,7 +32,7 @@ public class MenuController implements View.OnClickListener {
       ActivityCompat.requestPermissions(activity,
           new String[]{permission.ACCESS_FINE_LOCATION},
           MY_PERMISSIONS_REQUEST_FINE_lOCATION);
-      
+
       return false;
     }
     if (appContext.checkSelfPermission(permission.ACCESS_COARSE_LOCATION)
