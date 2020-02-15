@@ -8,7 +8,22 @@
     tools:context=".BubblePage">
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/first"
+        android:layout_width="276dp"
+        android:layout_height="87dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/text_view_circle"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/button_okay"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.388"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/second"
         android:layout_width="276dp"
         android:layout_height="87dp"
         android:layout_marginTop="24dp"
