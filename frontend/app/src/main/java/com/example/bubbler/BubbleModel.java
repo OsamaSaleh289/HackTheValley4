@@ -27,8 +27,6 @@ public class BubbleModel implements BubbleModelInterface, LocationListener {
     if (context.checkSelfPermission(permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
       // Permission is not granted
       Toast.makeText(context, "allow location permission",Toast.LENGTH_LONG).show();
-
-
       gps_enabled = false;
     }
     else {

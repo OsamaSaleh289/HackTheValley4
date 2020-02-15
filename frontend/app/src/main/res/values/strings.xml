@@ -1,6 +1,7 @@
 <resources>
-  <string name="app_name">Bubbler</string>
-  <string name="menu_post">Post</string>
-  <string name="menu_update">Update</string>
-  <string name="menu_enter">Enter</string>
+    <string name="app_name">Bubbler</string>
+    <string name="menu_post">Post</string>
+    <string name="menu_update">Update</string>
+    <string name="menu_enter">Enter</string>
+    <string name="button_okay">Okay</string>
 </resources>
