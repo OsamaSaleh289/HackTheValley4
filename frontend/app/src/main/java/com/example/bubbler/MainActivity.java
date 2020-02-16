@@ -7,26 +7,54 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
 
+import com.example.bubbler.LoginAndAccount.WriteAndCheck;
+
 import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Date currentTime;
+    private LoginPresenter loginPresenter;
+    private WriteAndCheck wac;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    currentTime = Calendar.getInstance().getTime();
-  }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        loginPresenter = new LoginPresenter();
+        wac = new WriteAndCheck();
 
-  public void check(View view){
-      Intent intent = new Intent(this, BubbleView.class);
-      intent.putExtra("Time", currentTime);
-      EditText text = findViewById(R.id.thought);
-      String content = text.getText().toString();
-      intent.putExtra("Content", content);
-      startActivity(intent);
-  }
+    }
+
+    @Override
+    public void onBackPressed(){
+        moveTaskToBack(true);
+    }
+
+    public void createAccount(View view) {
+        Intent intent = new Intent(this, CreateAccountActivity.class);
+        startActivity(intent);
+
+    }
+
+
+    public void LoginButton(View view) {
+        Intent intent = new Intent(this, HomePage.class);
+        EditText editTextUser = findViewById(R.id.editText1);
+        EditText editTextPass = findViewById(R.id.editText);
+        String username = editTextUser.getText().toString();
+        String password = editTextPass.getText().toString();
+        if (loginPresenter.validateCredentialsForLogin(getApplicationContext(), username, password,
+                editTextUser, editTextPass)) {
+
+            intent.putExtra("Username", username);
+            startActivity(intent);
+        }
+    }
+
+    public void exitApplication(View view) {
+        moveTaskToBack(true);
+    }
+
+
 }

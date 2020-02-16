@@ -46,7 +46,7 @@ public class MenuController implements View.OnClickListener {
 
       return false;
     }
-    if (appContext.checkSelfPermission(permission.ACCESS_BACKGROUND_LOCATION)
+    /*if (appContext.checkSelfPermission(permission.ACCESS_BACKGROUND_LOCATION)
         != PackageManager.PERMISSION_GRANTED) {
       // Permission is not granted
       // No explanation needed; request the permission
@@ -55,7 +55,7 @@ public class MenuController implements View.OnClickListener {
           MY_PERMISSIONS_REQUEST_BACKGROUND_LOCATION);
 
       return false;
-    }
+    }*/
     if (appContext.checkSelfPermission(permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
       // Permission is not granted
       // No explanation needed; request the permission
