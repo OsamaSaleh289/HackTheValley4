@@ -13,6 +13,7 @@ public class MenuController implements View.OnClickListener {
 
   private int MY_PERMISSIONS_REQUEST_FINE_lOCATION = 1;
   private int MY_PERMISSIONS_REQUEST_COARSE_LOCATION = 2;
+  private int MY_PERMISSIONS_REQUEST_BACKGROUND_LOCATION = 4;
   private int MY_PERMISSIONS_REQUEST_INTERNET = 3;
 
   private Context appContext;
@@ -42,6 +43,16 @@ public class MenuController implements View.OnClickListener {
       ActivityCompat.requestPermissions(activity,
           new String[]{permission.ACCESS_COARSE_LOCATION},
           MY_PERMISSIONS_REQUEST_COARSE_LOCATION);
+
+      return false;
+    }
+    if (appContext.checkSelfPermission(permission.ACCESS_BACKGROUND_LOCATION)
+        != PackageManager.PERMISSION_GRANTED) {
+      // Permission is not granted
+      // No explanation needed; request the permission
+      ActivityCompat.requestPermissions(activity,
+          new String[]{permission.ACCESS_BACKGROUND_LOCATION},
+          MY_PERMISSIONS_REQUEST_BACKGROUND_LOCATION);
 
       return false;
     }
