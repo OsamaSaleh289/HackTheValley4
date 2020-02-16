@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class BubbleView extends AppCompatActivity {
 
@@ -30,17 +31,18 @@ public class BubbleView extends AppCompatActivity {
   private Looper looper;
   private LocationResult locationResult;
   private boolean requestingLocationUpdates;
-  private List msgs = new ArrayList<String>();
-  private List bbls = new ArrayList<TextView>();
+  private List<String> msgs = new ArrayList<String>();
+  private List<TextView> bbls = new ArrayList<TextView>();
   private String placeholder = "kachow";
   private Timer timer;
+  private BubbleModel model;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_bubble_page);
 
-    BubbleModel model = new BubbleModel(this);
+    model = new BubbleModel(this);
     Intent intent = getIntent();
     Date time = (Date) intent.getSerializableExtra("Time");
     String content = (String) intent.getSerializableExtra("Content");
@@ -64,6 +66,7 @@ public class BubbleView extends AppCompatActivity {
     });
     animator.start();
 
+    createLocationRequest();
     fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
     fusedLocationClient.getLastLocation()
         .addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -78,6 +81,7 @@ public class BubbleView extends AppCompatActivity {
             }
           }
         });
+
     loC = new LocationCallback() {
       @Override
       public void onLocationResult(LocationResult locationResult) {
@@ -93,11 +97,11 @@ public class BubbleView extends AppCompatActivity {
 
       ;
     };
-    createLocationRequest();
     startLocationUpdates();
 
     setUpMSGBBList(model.receive(curlocation));
-    txtTobbl(model, curlocation);
+    txtTobbl(curlocation);
+    setUpTimer();
     //post initial message
     if ((!content.isEmpty() && (curlocation != null))) {
       model.post(time, curlocation, content);
@@ -151,18 +155,36 @@ public class BubbleView extends AppCompatActivity {
     msgs.addAll(list);
   }
 
-  private void txtTobbl(BubbleModel model, Location location) {
+  private void txtTobbl(Location location) {
     for (Object tv : bbls) {
       if (!msgs.isEmpty()) {
         List<String> at = model.receive(location);
         if (at.isEmpty()) {
           msgs.add(placeholder);
         } else {
-          msgs.add(at);
+          msgs.addAll(at);
         }
       }
-      ((TextView) tv).setText((String) msgs.get(0));
+      String s = msgs.get(0).toString();
+      ((TextView) tv).setText(s);
       msgs.remove(0);
     }
   }
+
+  class upRecTask extends TimerTask {
+    public void run() {
+      if(curlocation!=null) {
+        model.update(curlocation);
+        txtTobbl(curlocation);
+      }
+    }
+  }
+
+  private void setUpTimer(){
+    timer = new Timer();
+    TimerTask timerTask = new upRecTask();
+    timer.scheduleAtFixedRate(timerTask,2000L,2000L);
+  }
+
+
 }
