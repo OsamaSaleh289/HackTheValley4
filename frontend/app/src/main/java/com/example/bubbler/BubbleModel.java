@@ -2,6 +2,13 @@ package com.example.bubbler;
 
 import android.content.Context;
 import android.location.Location;
+
+import org.apache.commons.io.IOUtils;
+
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +30,27 @@ public class BubbleModel implements BubbleModelInterface {
   }
 
   public List receive(Location location) {
+    Thread thread = new Thread(new Runnable() {
+
+      @Override
+      public void run() {
+        try  {
+          URL url = new URL("https://bubme.herokuapp.com/get?user=Osama&lat=100&lon=100");
+          HttpURLConnection urlConnection = null;
+          urlConnection = (HttpURLConnection) url.openConnection();
+          InputStream in = null;
+          InputStream is= urlConnection.getInputStream();
+          in = new BufferedInputStream(is);
+          String myString = IOUtils.toString(in, "UTF-8");
+          System.out.println(myString);
+          urlConnection.disconnect();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+    });
+
+    thread.start();
     //send location to database
 
     //receive a list of messages in radius (DUMMY)
