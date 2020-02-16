@@ -3,4 +3,7 @@
     <dimen name="title_size">32dp</dimen>
     <dimen name="text_size">12dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="bblWidth">280dp</dimen>
+    <dimen name="bblHeight">90dp</dimen>
+    <dimen name="bbtxt_size">22sp</dimen>
 </resources>
