@@ -30,7 +30,8 @@ public class BubbleView extends AppCompatActivity {
   private LocationResult locationResult;
   private boolean requestingLocationUpdates;
   private List msgs = new ArrayList<String>();
-
+  private List bbls = new ArrayList<TextView>();
+  private String placeholder = "kachow";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +42,6 @@ public class BubbleView extends AppCompatActivity {
     Intent intent = getIntent();
     Date time = (Date) intent.getSerializableExtra("Time");
     String content = (String) intent.getSerializableExtra("Content");
-
-    msgs.addAll(model.receive(null));
 
     final TextView first = (TextView) findViewById(R.id.first);
     final TextView second = (TextView) findViewById(R.id.second);
@@ -83,10 +82,10 @@ public class BubbleView extends AppCompatActivity {
         if (locationResult == null) {
           return;
         }
-        for (Location location : locationResult.getLocations()) {
-          second.setText(
-              "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
-        }
+//        for (Location location : locationResult.getLocations()) {
+//          second.setText(
+//              "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
+//        }
         curlocation = locationResult.getLastLocation();
       }
 
@@ -95,6 +94,8 @@ public class BubbleView extends AppCompatActivity {
     createLocationRequest();
     startLocationUpdates();
 
+
+    setUpMSGBBList(model.receive(curlocation));
     //post initial message
     if ((!content.isEmpty() && (curlocation != null))) {
       model.post(time, curlocation, content);
@@ -132,4 +133,30 @@ public class BubbleView extends AppCompatActivity {
     fusedLocationClient.removeLocationUpdates(loC);
   }
 
+
+  private void setUpMSGBBList(List list) {
+    bbls.add((TextView) (findViewById(R.id.first)));
+    bbls.add((TextView) (findViewById(R.id.second)));
+    bbls.add((TextView) (findViewById(R.id.third)));
+    bbls.add((TextView) (findViewById(R.id.fourth)));
+    bbls.add((TextView) (findViewById(R.id.fifth)));
+    bbls.add((TextView) (findViewById(R.id.sixth)));
+    bbls.add((TextView) (findViewById(R.id.seventh)));
+    bbls.add((TextView) (findViewById(R.id.eighth)));
+    bbls.add((TextView) (findViewById(R.id.ninth)));
+    bbls.add((TextView) (findViewById(R.id.tenth)));
+
+    msgs.addAll(list);
+    txtTobbl();
+  }
+
+  private void txtTobbl() {
+    for (Object tv : bbls) {
+      if(!msgs.isEmpty()) {
+        msgs.add(placeholder);
+      }
+        ((TextView) tv).setText((String) msgs.get(0));
+        msgs.remove(0);
+    }
+  }
 }
