@@ -16,7 +16,9 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class BubbleView extends AppCompatActivity {
 
@@ -27,6 +29,8 @@ public class BubbleView extends AppCompatActivity {
   private Looper looper;
   private LocationResult locationResult;
   private boolean requestingLocationUpdates;
+  private List msgs = new ArrayList<String>();
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,8 @@ public class BubbleView extends AppCompatActivity {
     Intent intent = getIntent();
     Date time = (Date) intent.getSerializableExtra("Time");
     String content = (String) intent.getSerializableExtra("Content");
+
+    msgs.addAll(model.receive(null));
 
     final TextView first = (TextView) findViewById(R.id.first);
     final TextView second = (TextView) findViewById(R.id.second);
