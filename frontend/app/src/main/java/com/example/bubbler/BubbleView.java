@@ -18,7 +18,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.Date;
 
-public class BubbleView extends AppCompatActivity{
+public class BubbleView extends AppCompatActivity {
 
   private FusedLocationProviderClient fusedLocationClient;
   private Location curlocation;
@@ -46,16 +46,16 @@ public class BubbleView extends AppCompatActivity{
     animator.setInterpolator(new LinearInterpolator());
     animator.setDuration(9000L);
     animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            float progress = (float) animation.getAnimatedValue();
-            float width = first.getWidth();
-            float translationX = width * progress;
-            first.setTranslationX(translationX);
-            second.setTranslationX(translationX - width);
-        }
-      });
-      animator.start();
+      @Override
+      public void onAnimationUpdate(ValueAnimator animation) {
+        float progress = (float) animation.getAnimatedValue();
+        float width = first.getWidth();
+        float translationX = width * progress;
+        first.setTranslationX(translationX);
+        second.setTranslationX(translationX - width);
+      }
+    });
+    animator.start();
 
     fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
     fusedLocationClient.getLastLocation()
@@ -66,12 +66,12 @@ public class BubbleView extends AppCompatActivity{
             if (location != null) {
               // Logic to handle location object
               curlocation = location;
-              first.setText(
-                  "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
+              //first.setText(
+              //    "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
             }
           }
         });
-    loC = new LocationCallback(){
+    loC = new LocationCallback() {
       @Override
       public void onLocationResult(LocationResult locationResult) {
         if (locationResult == null) {
@@ -81,10 +81,18 @@ public class BubbleView extends AppCompatActivity{
           second.setText(
               "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
         }
-      };
+        curlocation = locationResult.getLastLocation();
+      }
+
+      ;
     };
     createLocationRequest();
     startLocationUpdates();
+
+    //post initial message
+    if ((!content.isEmpty() && (curlocation != null))) {
+      model.post(time, curlocation, content);
+    }
   }
 
   @Override
@@ -110,7 +118,7 @@ public class BubbleView extends AppCompatActivity{
   protected void createLocationRequest() {
     locR = LocationRequest.create();
     locR.setInterval(10000);
-    locR.setFastestInterval(5000);
+    locR.setFastestInterval(500);
     locR.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
   }
 

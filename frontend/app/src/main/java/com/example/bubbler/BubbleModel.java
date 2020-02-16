@@ -2,8 +2,8 @@ package com.example.bubbler;
 
 import android.content.Context;
 import android.location.Location;
-import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BubbleModel implements BubbleModelInterface {
@@ -14,7 +14,7 @@ public class BubbleModel implements BubbleModelInterface {
     this.context = context;
   }
 
-  public void post(Time time, Location location, String content) {
+  public void post(Date time, Location location, String content) {
     //send time, location, content to database
   }
 

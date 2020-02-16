@@ -1,7 +1,7 @@
 package com.example.bubbler;
 
 import android.location.Location;
-import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 
 public interface BubbleModelInterface {
@@ -13,7 +13,7 @@ public interface BubbleModelInterface {
    * @param location location of user
    * @param content content of message
    */
-  public void post(Time time, Location location, String content);
+  public void post(Date time, Location location, String content);
 
   /**
    * takes the user's location, user_id, and post_id?
