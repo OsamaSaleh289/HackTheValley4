@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
 
 public class BubbleView extends AppCompatActivity {
 
@@ -32,6 +33,7 @@ public class BubbleView extends AppCompatActivity {
   private List msgs = new ArrayList<String>();
   private List bbls = new ArrayList<TextView>();
   private String placeholder = "kachow";
+  private Timer timer;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +96,8 @@ public class BubbleView extends AppCompatActivity {
     createLocationRequest();
     startLocationUpdates();
 
-
     setUpMSGBBList(model.receive(curlocation));
+    txtTobbl(model, curlocation);
     //post initial message
     if ((!content.isEmpty() && (curlocation != null))) {
       model.post(time, curlocation, content);
@@ -147,16 +149,20 @@ public class BubbleView extends AppCompatActivity {
     bbls.add((TextView) (findViewById(R.id.tenth)));
 
     msgs.addAll(list);
-    txtTobbl();
   }
 
-  private void txtTobbl() {
+  private void txtTobbl(BubbleModel model, Location location) {
     for (Object tv : bbls) {
-      if(!msgs.isEmpty()) {
-        msgs.add(placeholder);
+      if (!msgs.isEmpty()) {
+        List<String> at = model.receive(location);
+        if (at.isEmpty()) {
+          msgs.add(placeholder);
+        } else {
+          msgs.add(at);
+        }
       }
-        ((TextView) tv).setText((String) msgs.get(0));
-        msgs.remove(0);
+      ((TextView) tv).setText((String) msgs.get(0));
+      msgs.remove(0);
     }
   }
 }
