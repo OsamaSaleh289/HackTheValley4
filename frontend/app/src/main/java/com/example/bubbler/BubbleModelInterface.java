@@ -1,6 +1,9 @@
 package com.example.bubbler;
 
 import android.location.Location;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +16,7 @@ public interface BubbleModelInterface {
    * @param location location of user
    * @param content content of message
    */
-  public void post(Date time, Location location, String content);
+  public void post(Date time, Location location, String content) throws MalformedURLException, IOException;
 
   /**
    * takes the user's location, user_id, and post_id?

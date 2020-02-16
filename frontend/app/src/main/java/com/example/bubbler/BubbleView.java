@@ -16,6 +16,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -104,7 +105,11 @@ public class BubbleView extends AppCompatActivity {
     setUpTimer();
     //post initial message
     if ((!content.isEmpty() && (curlocation != null))) {
-      model.post(time, curlocation, content);
+        try {
+            model.post(time, curlocation, content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
   }
 
