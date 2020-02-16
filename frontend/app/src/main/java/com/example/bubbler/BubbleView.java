@@ -85,7 +85,6 @@ public class BubbleView extends AppCompatActivity{
     };
     createLocationRequest();
     startLocationUpdates();
-    fusedLocationClient.getLastLocation();
   }
 
   @Override

@@ -1,13 +1,7 @@
 package com.example.bubbler;
 
-import android.Manifest.permission;
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.widget.Toast;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +9,6 @@ import java.util.List;
 public class BubbleModel implements BubbleModelInterface {
 
   private Context context;
-  protected LocationManager locationManager;
-  protected boolean gps_enabled, network_enabled;
 
   protected BubbleModel(Context context) {
     this.context = context;
