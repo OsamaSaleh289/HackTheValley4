@@ -27,16 +27,16 @@ public class BubbleModel implements BubbleModelInterface {
 
     //receive a list of messages in radius (DUMMY)
     List<String> dummythicc = new ArrayList<String>();
-    dummythicc.add("school sux");
+    dummythicc.add("school cool");
     dummythicc.add("jupiter stoopiter");
     dummythicc.add("i love my wifeye");
     dummythicc.add("food is goood");
-    dummythicc.add("utsc is :(");
+    dummythicc.add("utsc is :>");
     dummythicc.add(":flushed:");
-    dummythicc.add("i dislike you!");
+    dummythicc.add("i dislike you!!!!");
     dummythicc.add("oppa gangnam style");
     dummythicc.add("crazy crazy frog");
-    dummythicc.add("bishishishih");
+    dummythicc.add("bishishishihoppo");
     dummythicc.add("lagnagvag");
     dummythicc.add("machupichu");
     dummythicc.add("ezay monay");
