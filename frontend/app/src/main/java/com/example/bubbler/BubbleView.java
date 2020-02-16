@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -19,7 +21,12 @@ import java.util.Date;
 public class BubbleView extends AppCompatActivity{
 
   private FusedLocationProviderClient fusedLocationClient;
-  private Location location;
+  private Location curlocation;
+  private LocationRequest locR;
+  private LocationCallback loC;
+  private Looper looper;
+  private LocationResult locationResult;
+  private boolean requestingLocationUpdates;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +65,58 @@ public class BubbleView extends AppCompatActivity{
             // Got last known location. In some rare situations this can be null.
             if (location != null) {
               // Logic to handle location object
+              curlocation = location;
               first.setText(
                   "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
             }
           }
         });
+    loC = new LocationCallback(){
+      @Override
+      public void onLocationResult(LocationResult locationResult) {
+        if (locationResult == null) {
+          return;
+        }
+        for (Location location : locationResult.getLocations()) {
+          second.setText(
+              "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
+        }
+      };
+    };
+    createLocationRequest();
+    startLocationUpdates();
     fusedLocationClient.getLastLocation();
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    if (requestingLocationUpdates) {
+      startLocationUpdates();
+    }
+  }
+
+  private void startLocationUpdates() {
+    fusedLocationClient.requestLocationUpdates(locR,
+        loC,
+        Looper.getMainLooper());
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    stopLocationUpdates();
+  }
+
+  protected void createLocationRequest() {
+    locR = LocationRequest.create();
+    locR.setInterval(10000);
+    locR.setFastestInterval(5000);
+    locR.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+  }
+
+  private void stopLocationUpdates() {
+    fusedLocationClient.removeLocationUpdates(loC);
   }
 
 }
